@@ -18,19 +18,9 @@ cpp.on("error", err => {
 
 const spellData = {
   spellId: "SPELL_001",
-  pronunciation: 87.3,
-  volume: 55,
+  pronunciation: 70.3,
+  volume: 60,
 };
 
 // 반드시 개행 포함
 cpp.stdin.write(JSON.stringify(spellData) + "\n");
-
-
-
-
-
-
-
-
-
-
