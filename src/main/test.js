@@ -24,3 +24,13 @@ const spellData = {
 
 // 반드시 개행 포함
 cpp.stdin.write(JSON.stringify(spellData) + "\n");
+
+
+
+
+
+
+
+
+
+
