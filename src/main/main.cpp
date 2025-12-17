@@ -2,6 +2,7 @@
 #include <string>
 
 #include "../core/Character.h"
+#include "../battle/Battle.h"
 
 #include "json.hpp"
 
@@ -42,7 +43,16 @@ int main()
     //     cout << "실패" << endl;
     // } // else
 
-    Character a{ "미림", 10000, 1000, 1000 };
+    Battle battle;
+
+    Character mirimE( "미림", 10000, 1000, 1000 );
+    Character teacher1( "진하쌤, 윤지쌤", 10000, 1000, 1000 );
+    Character teacher2( "성래쌤", 10000, 1000, 1000 );
+    Character teacher3( "교장쌤", 10000, 1000, 1000 );
+
+    battle.ProcessTurn( mirimE, teacher1 );
+
+    teacher1.PrintStatus();
 
     return 0;    
 }
