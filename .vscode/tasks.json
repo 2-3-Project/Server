@@ -14,6 +14,7 @@
             // "command": "cl /EHsc /I\"C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um\" SrcFile\\GameMain.cpp /link /LIBPATH:\"C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.26100.0\\um\\x64\" d3d11.lib",
             "args": [
 				"src\\core\\*.cpp",
+				"src\\battle\\*.cpp",
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
