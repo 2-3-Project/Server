@@ -1,8 +1,7 @@
 #include <iostream>
-#include <string>
-#include "Character.h"
+#include "../core/Character.h"
 
-Character::Character( std::string name, int hp, int atk, int strong ) : name( name ), maxHp( hp ), attack( atk ), strongAttack( strong )
+Character::Character( const std::string& name, int hp, int atk, int strong ) : name( name ), maxHp( hp ), attack( atk ), strongAttack( strong )
 {
     this -> hp = maxHp;
 }
