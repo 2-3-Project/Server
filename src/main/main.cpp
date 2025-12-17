@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+
+#include "../core/Character.h"
+
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -7,35 +10,39 @@ using namespace std;
 
 int main()
 {
-    string input;
-    getline(cin, input);
+    // string input;
+    // getline(cin, input);
 
-    json data = json::parse(input);
-    int volume = data["volume"];
-    float pronunciation = data["pronunciation"];
+    // json data = json::parse(input);
+    // int volume = data["volume"];
+    // float pronunciation = data["pronunciation"];
 
-    if( pronunciation >= 70 )
-    {
-        cout << "성공" << endl;
-        if( volume > 85 )
-        {
-            cout << "공격 실패" << endl;
-        } // if
-        else if( volume >= 70 )
-        {
-            cout << "강공격" << endl;
-        } // else if
-        else if( volume >= 40 )
-        {
-            cout << "기본 공격력" << endl;
-        } // else if
-        else
-        {
-            cout << "실패" << endl;
-        } // else
-    }
-    else
-    {
-        cout << "실패" << endl;
-    }
+    // if( pronunciation >= 70 )
+    // {
+    //     cout << "성공" << endl;
+    //     if( volume > 85 )
+    //     {
+    //         cout << "공격 실패" << endl;
+    //     } // if
+    //     else if( volume >= 70 )
+    //     {
+    //         cout << "강공격" << endl;
+    //     } // else if
+    //     else if( volume >= 40 )
+    //     {
+    //         cout << "기본 공격력" << endl;
+    //     } // else if
+    //     else
+    //     {
+    //         cout << "실패" << endl;
+    //     } // else
+    // } // if
+    // else
+    // {
+    //     cout << "실패" << endl;
+    // } // else
+
+    Character a{ "미림", 10000, 1000, 1000 };
+
+    return 0;    
 }
