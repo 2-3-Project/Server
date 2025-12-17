@@ -19,8 +19,7 @@ cpp.on("error", err => {
 const spellData = {
   spellId: "SPELL_001",
   pronunciation: 87.3,
-  volume: 60,
-  emotion: 75
+  volume: 55,
 };
 
 // 반드시 개행 포함

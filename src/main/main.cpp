@@ -1,17 +1,24 @@
 #include <iostream>
 #include <string>
+#include "json.hpp"
 
+using json = nlohmann::json;
 using namespace std;
 
 int main()
 {
-    cout << "C++ CORE READY\n";
-
     string input;
-    
-    if (std::getline(std::cin, input)) {
-        std::cout << "RECEIVED: " << input << std::endl;
-    }
+    getline(cin, input);
 
-    return 0;
+    json data = json::parse(input);
+    int volume = data["volume"];
+
+    if( volume >= 60 )
+    {
+        cout << "통과, volume : " << volume << endl;
+    }
+    else
+    {
+        cout << "실패, volume : " << volume << endl;
+    }
 }
