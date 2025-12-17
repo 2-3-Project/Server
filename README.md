@@ -2,20 +2,23 @@
 ```
 git status
 ```
-커밋 방법
 
+pull 방법
 ```
 git checkout dev
 git pull origin dev
 git checkout user/이름 ( 이름에 자기 이름 쓰기. 예시 : user/박재영 )
 git merge dev
+```
+
+push 방법
+```
 git add .
 git commit -m "커밋 메시지"
 git push origin user/이름
 ```
 
-push 후
-Pull requests에 들어간뒤
+push 후 Pull requests에 들어간 뒤
 <br>
 <img width="598" height="192" alt="image" src="https://github.com/user-attachments/assets/f1a29d29-2cf9-4b03-acf8-c92d0b8238eb" />
 <br>
