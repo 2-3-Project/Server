@@ -1,9 +1,10 @@
 #pragma once
 
-class Character
+class Character 
 {
     public :
         std::string name;
+        int maxHp;
         int hp;
         int attack;
         int strongAttack;
