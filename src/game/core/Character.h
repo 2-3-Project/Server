@@ -4,7 +4,7 @@
 
 class Character 
 {
-    public :
+    private :
         std::string name;
         int maxHp;
         int hp;
@@ -16,8 +16,13 @@ class Character
 
         void Attack( Character& target );
         void StrongAttack( Character& target );
-        void takeDamage( int dmg );
-        bool isDead() const;
+        void TakeDamage( int dmg );
+        bool IsDead() const;
+
+        std::string GetName() const;
+        int GetHp() const;
+        int GetAttack() const;
+        int GetStrongAttack() const;
 
         void PrintStatus();
 };
