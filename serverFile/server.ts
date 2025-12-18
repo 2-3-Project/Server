@@ -1,35 +1,29 @@
-import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
+import { spawn } from "child_process";
+import express, { Request, Response } from "express";
+import {Data} from "../src/tsFile/audio";
 
-const useSpeechToText = () => {
-  const {
-    transcript,
-    listening,
-    browserSupportsSpeechRecognition
-  } = useSpeechRecognition();
+const app = express();
 
-  const toggleListening = () => {
-    if (!browserSupportsSpeechRecognition) {
-      alert("이 브라우저는 음성 인식을 지원하지 않습니다.");
-      return;
-    }
+app.post("/sign", (req: Request, res: Response) => {
+  return null;
+});
 
-    if (listening) {
-      SpeechRecognition.stopListening();
-    } else {
-      SpeechRecognition.startListening({
-        language: "ko-KR",
-        continuous: true,
-        interimResults: true
-      });
-    }
-  };
+app.get("/start", (req: Request, res: Response) => {
+  const cpp = spawn("src/main/main.exe");
 
-  return {
-    transcript,
-    listening,
-    toggleListening,
-    browserSupportsSpeechRecognition
-  };
-};
+  cpp.stdout.on("data", (outputData) => {
+    console.log(outputData.toString());
+  });
 
-export default useSpeechToText;
+  cpp.stdin.on("data", (inputData) => {
+    console.log(inputData);
+  });
+
+  cpp.on("close", () => {
+    res.send("C++ 실행 완료");
+  });
+});
+
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000/");
+});
