@@ -30,7 +30,7 @@ void GameManager::Run()
 
         while (battle.IsRunning())
         {
-            AttackResult action = input.ResolveFromJson( "src\\main\\test.json" );
+            AttackResult action = input.ResolveFromJson( "src\\game\\test.json" );
             battle.Update( action );
         }
 
