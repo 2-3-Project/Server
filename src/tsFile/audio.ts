@@ -25,7 +25,6 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 
     const dataArray = new Uint8Array(analyser.fftSize);
 
-
     function checkVolume() {
       analyser.getByteTimeDomainData(dataArray);
       let sum = 0;
