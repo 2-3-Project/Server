@@ -3,6 +3,11 @@
 #include "../core/Character.h"
 #include "../input/InputHandler.h"
 
+#include <iostream>
+#include <cstdlib>
+
+const int TURN_DELAY_MS = 3000;
+
 enum class Turn {
     PLAYER,
     ENEMY
@@ -24,7 +29,7 @@ class Battle
         Battle();
 
         void Start(Character& player, Character& enemy);
-        void Update( const AttackResult& playerAction );
+        void Update( const AttackResult& action );
         bool IsRunning() const;
 
 };

@@ -2,45 +2,62 @@
 #include <iostream>
 
 #include "InputHandler.h"
-#include "json.hpp"
+#include "../json.hpp"
 
 
 using json = nlohmann::json;
 
-AttackResult InputHandler::ResolveFromJson( const std::string& filePath )
+InputHandler::InputHandler(const std::string& filePath)
 {
-    std::ifstream file( filePath );
-    if ( !file.is_open() )
+    std::ifstream file(filePath);
+    if (!file.is_open())
     {
-        std::cerr << "JSON 파일 열기 실패\n";
-        return { AttackType::Fail, 0 };
+        std::cerr << "Input JSON 파일 열기 실패: " << filePath << "\n";
+        return;
     }
 
     try
     {
         json j;
         file >> j;
-
-        std::string spellId = j.value("spellId", "");
-        float pronunciation = j.value("pronunciation", 0.0f);
-        int volume = j.value("volume", 0);
-
-        // 1차
-        if (pronunciation < 70)
-            return { AttackType::Fail, spellId };
-
-        // 2차
-        if (volume >= 85)
-            return { AttackType::Fail, spellId };
-        else if (volume >= 70)
-            return { AttackType::Strong, spellId };
-        else if (volume >= 40)
-            return { AttackType::Normal, spellId };
-
-        return { AttackType::Fail, spellId };
+        if (j.is_array())
+        {
+            inputs = j.get<std::vector<json>>();
+        }
+        else
+        {
+            inputs.push_back(j);
+        }
     }
-    catch( ... )
+    catch (...)
+    {
+        std::cerr << "Input JSON 파싱 실패\n";
+    }
+}
+
+AttackResult InputHandler::ResolveFromJson()
+{
+    if (index >= inputs.size())
     {
         return { AttackType::Fail, "" };
-    }    
+    }
+
+    json j = inputs[index++];
+    std::string spellId = j.value("spellId", "");
+    float pronunciation = j.value("pronunciation", 0.0f);
+    int volume = j.value("volume", 0);
+
+    // 1차
+    if (pronunciation < 70)
+        return { AttackType::Fail, spellId };
+
+    // 2차
+    if (volume >= 85)
+        return { AttackType::Fail, spellId };
+    else if (volume >= 70)
+        return { AttackType::Strong, spellId };
+    else if (volume >= 40)
+        return { AttackType::Normal, spellId };
+
+    return { AttackType::Fail, spellId };
 }

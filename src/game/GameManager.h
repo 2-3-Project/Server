@@ -2,9 +2,9 @@
 
 #include <vector>
 
-#include "..\game\battle\Battle.h"
-#include "..\game\core\Character.h"
-#include "..\game\input\InputHandler.h"
+#include "battle/Battle.h"
+#include "../game/core/Character.h"
+#include "../game/input/InputHandler.h"
 
 class GameManager
 {
