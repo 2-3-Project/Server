@@ -1,26 +1,26 @@
 import DataBase from "better-sqlite3";
+import path from "path";
 
-const db = new DataBase("game.db");
+const dbPath = path.join(__dirname, "../game.db");
+
+const db = new DataBase(dbPath);
 
 db.pragma("foreign_keys = ON");
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        rank INTEGER,
-        hp REAL,
+        name TEXT NOT NULL UNIQUE,
+        rank INTEGER DEFAULT 0,
+        hp REAL
     )
 `).run();
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS ranking (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        hp REAL,
-        rank INTEGER,
-        FOREIGN KEY (name) REFENCES users(name) ON DELETE CASCADE,
-        FOREIGN KEY (rank) REFENCES users(rank) ON DELETE CASCADE
+        userId INTEGER NOT NULL,
+        FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE
     )
 `).run();
 

@@ -1,29 +1,54 @@
-import { spawn } from "child_process";
 import express, { Request, Response } from "express";
-import {Data} from "../src/tsFile/audio";
+import { spawn } from "child_process";
+
+import db from "./db";
 
 const app = express();
+app.use(express.json());
 
-app.post("/sign", (req: Request, res: Response) => {
-  return null;
+app.post("/auth", (req : Request, res : Response) => {
+  const { name } = req.body;
+  if(!name){
+      return res.status(400).send("이름을 입력해주세요!");
+  }
+
+  try{
+      db.prepare(`
+          INSERT INTO users (name) VALUES (?)
+      `).run(name);
+
+      res.send("회원가입이 완료됨!");
+  }
+  catch (err){
+      res.status(400).send("이미 존재하는 아이디 입니다!");
+  }
 });
 
-app.get("/start", (req: Request, res: Response) => {
+app.post("/game/attack", (req : Request, res : Response) => {
+  const getJson = req.body;
+
   const cpp = spawn("src/main/main.exe");
 
-  cpp.stdout.on("data", (outputData) => {
-    console.log(outputData.toString());
+  let output = "";
+
+  cpp.stdin.write(JSON.stringify(getJson));
+  cpp.stdin.end();
+
+  cpp.stdout.on("data", (data) => {
+    output += data.toString();
   });
 
-  cpp.stdin.on("data", (inputData) => {
-    console.log(inputData);
+  cpp.stderr.on("data", (err) => {
+    console.error("C++ error : ", err.toString());
   });
-
+  
   cpp.on("close", () => {
-    res.send("C++ 실행 완료");
+    res.send(output.trim());
   });
+
 });
 
+
 app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000/");
+  console.log("Server running on http://localhost:3000");
 });
