@@ -1,5 +1,9 @@
 #include "GameManager.h"
 #include <iostream>
+#include <fstream>
+#include <windows.h>
+
+std::ofstream outputFile("src/game/input/output.json");
 
 GameManager::GameManager()
     : mirimE("미림이", 100000, 10000, 15000),
@@ -17,7 +21,7 @@ void GameManager::SetupEnemies()
 
 void GameManager::Run()
 {
-    InputHandler input;
+    InputHandler input("src\\game\\input\\input.json");
 
     std::cout << "전투 시작\n";
 
@@ -30,7 +34,7 @@ void GameManager::Run()
 
         while (battle.IsRunning())
         {
-            AttackResult action = input.ResolveFromJson( "src\\game\\test.json" );
+            AttackResult action = input.ResolveFromJson();
             battle.Update( action );
         }
 
@@ -41,6 +45,14 @@ void GameManager::Run()
         }
 
         std::cout << enemy.GetName() << " 처치\n";
+
+        // 스토리 진행 (마지막 적이 아니면)
+        if (currentEnemyIndex < enemies.size() - 1) {
+            outputFile << R"({"event": "story", "message": ")" << (currentEnemyIndex + 1) << R"(번째 선생님을 물리쳤다! 스토리 진행..."} )" << std::endl;
+            std::cout << "스토리 진행...\n";
+            Sleep(3000);
+        }
+
         currentEnemyIndex++;
     }
 

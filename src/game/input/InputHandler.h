@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+#include <vector>
+
+#include "../json.hpp"
 
 enum class AttackType
 {
@@ -17,6 +20,11 @@ struct AttackResult
 
 class InputHandler
 {
-    public:
-        AttackResult ResolveFromJson( const std::string& filePath );
+public:
+    InputHandler(const std::string& filePath);
+    AttackResult ResolveFromJson();
+
+private:
+    std::vector<nlohmann::json> inputs;
+    size_t index = 0;
 };
