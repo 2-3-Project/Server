@@ -6,8 +6,6 @@ git status
 빌드 방법
 ```
 ./build.bat
-# 또는
-g++ -std=c++11 -I src/game/core -I src/game -I src/game/battle -I src/game/input src/main/main.cpp src/game/core/Character.cpp src/game/GameManager.cpp src/game/battle/Battle.cpp src/game/input/InputHandler.cpp -o main.exe
 ```
 
 실행 방법
