@@ -7,31 +7,26 @@
         "reveal": "always"
     },
     "tasks": [
-        //C++ 컴파일
         {
             "label": "save and compile for C++",
-            "command": "g++",
-            // "command": "cl /EHsc /I\"C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um\" SrcFile\\GameMain.cpp /link /LIBPATH:\"C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.26100.0\\um\\x64\" d3d11.lib",
+            "command": "./build.bat",
             "args": [
-				"src\\game\\battle\\*.cpp",
-				"src\\game\\core\\*.cpp",
-				"src\\game\\input\\*.cpp",
-				"src\\game\\*.cpp",
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}",
+                // "./build.bat"
+                // "src\\game\\battle\\*.cpp",
+                // "src\\game\\core\\*.cpp",
+                // "src\\game\\input\\*.cpp",
+                // "src\\game\\*.cpp",
+                // "${file}",
+                // "-o",
+                // "${fileDirname}/${fileBasenameNoExtension}"
             ],
             "group": "build",
-            //컴파일시 에러를 편집기에 반영
-            //참고:   https://code.visualstudio.com/docs/editor/tasks#_defining-a-problem-matcher
             "problemMatcher": {
                 "fileLocation": [
                     "relative",
                     "${workspaceRoot}"
                 ],
                 "pattern": {
-                    // The regular expression. 
-                    //Example to match: helloWorld.c:5:3: warning: implicit declaration of function 'prinft'
                     "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
@@ -41,7 +36,6 @@
                 }
             }
         },
-        //C 컴파일
         {
             "label": "save and compile for C",
             "command": "gcc",
@@ -51,16 +45,12 @@
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
             "group": "build",
-            //컴파일시 에러를 편집기에 반영
-            //참고:   https://code.visualstudio.com/docs/editor/tasks#_defining-a-problem-matcher
             "problemMatcher": {
                 "fileLocation": [
                     "relative",
                     "${workspaceRoot}"
                 ],
                 "pattern": {
-                    // The regular expression. 
-                    //Example to match: helloWorld.c:5:3: warning: implicit declaration of function 'prinft'
                     "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning error):\\s+(.*)$",
                     "file": 1,
                     "line": 2,
@@ -70,14 +60,13 @@
                 }
             }
         },
-        // // 바이너리 실행(Windows)
         {
             "label": "execute",
-            "command": "cmd",
+            "command": "./main.exe",
             "group": "test",
             "args": [
-                "/C",
-                "${fileDirname}\\${fileBasenameNoExtension}"
+                // "/C",
+                // "${fileDirname}\\${fileBasenameNoExtension}"
             ]
         }
     ]

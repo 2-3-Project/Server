@@ -1,7 +1,12 @@
+#include <windows.h>
 #include <iostream>
-#include <cstdlib>
+#include <fstream>
+
+#include "../json.hpp"
 
 #include "Battle.h"
+
+extern std::ofstream outputFile;
 
 Battle::Battle()
     : player(nullptr), enemy(nullptr),
@@ -17,7 +22,12 @@ void Battle::Start(Character& p, Character& e)
     currentTurn = Turn::PLAYER;
     running = true;
 
-    std::cout << "배틀 시작\n";
+    nlohmann::json output;
+    output["event"] = "battle_start";
+    output["player"] = {{"name", player->GetName()}, {"hp", player->GetHp()}};
+    output["enemy"] = {{"name", enemy->GetName()}, {"hp", enemy->GetHp()}};
+    std::string jsonStr = output.dump();
+    outputFile << jsonStr << std::endl;
 }
 
 bool Battle::IsRunning() const
@@ -25,12 +35,12 @@ bool Battle::IsRunning() const
     return running;
 }
 
-void Battle::Update( const AttackResult& playerAction )
+void Battle::Update( const AttackResult& action )
 {
     if (!running) return;
 
     if (currentTurn == Turn::PLAYER)
-        PlayerTurn( playerAction );
+        PlayerTurn( action );
     else
         EnemyTurn();
 
@@ -39,37 +49,64 @@ void Battle::Update( const AttackResult& playerAction )
 
 void Battle::PlayerTurn( const AttackResult& result )
 {
-    std::cout << "[플레이어 턴]\n";
+    nlohmann::json output;
+    output["event"] = "player_turn";
+    output["spellId"] = result.spellId;
+    Sleep(TURN_DELAY_MS);
 
     if (result.type == AttackType::Fail)
     {
-        std::cout << "공격 실패\n";
+        output["result"] = "fail";
     }
     else if (result.type == AttackType::Normal)
     {
-        std::cout << result.spellId << " 기본 공격\n";
-        enemy->TakeDamage(player->GetAttack());
+        int damage = player->GetAttack();
+        enemy->TakeDamage(damage);
+        output["result"] = "normal";
+        output["damage"] = damage;
+        output["enemyHp"] = enemy->GetHp();
     }
     else if (result.type == AttackType::Strong)
     {
-        std::cout << result.spellId << " 강공격\n";
-        enemy->TakeDamage(player->GetStrongAttack());
+        int damage = player->GetStrongAttack();
+        enemy->TakeDamage(damage);
+        output["result"] = "strong";
+        output["damage"] = damage;
+        output["enemyHp"] = enemy->GetHp();
     }
 
+    std::string jsonStr = output.dump();
+    outputFile << jsonStr << std::endl;
     currentTurn = Turn::ENEMY;
 }
 
 void Battle::EnemyTurn()
 {
-    std::cout << "[적 턴]\n";
+    nlohmann::json output;
+    output["event"] = "enemy_turn";
+    Sleep(TURN_DELAY_MS);
 
     int roll = rand() % 100;
 
     if (roll < 10)
-        player->TakeDamage(enemy->GetStrongAttack());
+    {
+        int damage = enemy->GetStrongAttack();
+        player->TakeDamage(damage);
+        output["result"] = "strong";
+        output["damage"] = damage;
+        output["playerHp"] = player->GetHp();
+    }
     else
-        player->TakeDamage(enemy->GetAttack());
+    {
+        int damage = enemy->GetAttack();
+        player->TakeDamage(damage);
+        output["result"] = "normal";
+        output["damage"] = damage;
+        output["playerHp"] = player->GetHp();
+    }
 
+    std::string jsonStr = output.dump();
+    outputFile << jsonStr << std::endl;
     currentTurn = Turn::PLAYER;
 }
 
@@ -78,6 +115,10 @@ void Battle::CheckEnd()
     if (player->IsDead() || enemy->IsDead())
     {
         running = false;
-        std::cout << "배틀 종료\n";
+        nlohmann::json output;
+        output["event"] = "battle_end";
+        output["winner"] = player->IsDead() ? "enemy" : "player";
+        std::string jsonStr = output.dump();
+        outputFile << jsonStr << std::endl;
     }
 }

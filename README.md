@@ -3,6 +3,16 @@
 git status
 ```
 
+빌드 방법
+```
+./build.bat
+```
+
+실행 방법
+```
+./main.exe
+```
+
 pull 방법
 ```
 git checkout dev
