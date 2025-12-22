@@ -13,6 +13,7 @@ app.post("/auth", (req : Request, res : Response) => {
       return res.status(400).send("이름을 입력해주세요!");
   }
 
+  //변경 사항
   try{
       db.prepare(`
           INSERT INTO users (name) VALUES (?)
