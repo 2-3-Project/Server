@@ -20,6 +20,8 @@ db.prepare(`
     CREATE TABLE IF NOT EXISTS ranking (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         userId INTEGER NOT NULL,
+        name TEXT NOT NULL,
+        rank REAL,
         FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE
     )
 `).run();
