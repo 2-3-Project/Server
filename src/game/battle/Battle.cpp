@@ -22,11 +22,13 @@ void Battle::Start(Character& p, Character& e)
     currentTurn = Turn::PLAYER;
     running = true;
 
-    nlohmann::json output;
-    output["event"] = "battle_start";
-    output["player"] = {{"name", player->GetName()}, {"hp", player->GetHp()}};
-    output["enemy"] = {{"name", enemy->GetName()}, {"hp", enemy->GetHp()}};
-    std::string jsonStr = output.dump();
+    // lastTurnResult에도 저장 (ProcessTurn에서 사용)
+    lastTurnResult.clear();
+    lastTurnResult["event"] = "battle_start";
+    lastTurnResult["player"] = {{"name", player->GetName()}, {"hp", player->GetHp()}, {"maxHp", player->GetMaxHp()}};
+    lastTurnResult["enemy"] = {{"name", enemy->GetName()}, {"hp", enemy->GetHp()}, {"maxHp", enemy->GetMaxHp()}};
+    
+    std::string jsonStr = lastTurnResult.dump();
     outputFile << jsonStr << std::endl;
 }
 
@@ -49,41 +51,43 @@ void Battle::Update( const AttackResult& action )
 
 void Battle::PlayerTurn( const AttackResult& result )
 {
-    nlohmann::json output;
-    output["event"] = "player_turn";
-    output["spellId"] = result.spellId;
+    lastTurnResult.clear();
+    lastTurnResult["event"] = "player_turn";
+    lastTurnResult["spellId"] = result.spellId;
     Sleep(TURN_DELAY_MS);
 
     if (result.type == AttackType::Fail)
     {
-        output["result"] = "fail";
+        lastTurnResult["result"] = "fail";
     }
     else if (result.type == AttackType::Normal)
     {
         int damage = player->GetAttack();
         enemy->TakeDamage(damage);
-        output["result"] = "normal";
-        output["damage"] = damage;
-        output["enemyHp"] = enemy->GetHp();
+        lastTurnResult["result"] = "normal";
+        lastTurnResult["damage"] = damage;
+        lastTurnResult["enemyHp"] = enemy->GetHp();
     }
     else if (result.type == AttackType::Strong)
     {
         int damage = player->GetStrongAttack();
         enemy->TakeDamage(damage);
-        output["result"] = "strong";
-        output["damage"] = damage;
-        output["enemyHp"] = enemy->GetHp();
+        lastTurnResult["result"] = "strong";
+        lastTurnResult["damage"] = damage;
+        lastTurnResult["enemyHp"] = enemy->GetHp();
     }
 
-    std::string jsonStr = output.dump();
+    lastTurnResult["playerHp"] = player->GetHp();
+
+    std::string jsonStr = lastTurnResult.dump();
     outputFile << jsonStr << std::endl;
     currentTurn = Turn::ENEMY;
 }
 
 void Battle::EnemyTurn()
 {
-    nlohmann::json output;
-    output["event"] = "enemy_turn";
+    lastTurnResult.clear();
+    lastTurnResult["event"] = "enemy_turn";
     Sleep(TURN_DELAY_MS);
 
     int roll = rand() % 100;
@@ -92,20 +96,22 @@ void Battle::EnemyTurn()
     {
         int damage = enemy->GetStrongAttack();
         player->TakeDamage(damage);
-        output["result"] = "strong";
-        output["damage"] = damage;
-        output["playerHp"] = player->GetHp();
+        lastTurnResult["result"] = "strong";
+        lastTurnResult["damage"] = damage;
+        lastTurnResult["playerHp"] = player->GetHp();
     }
     else
     {
         int damage = enemy->GetAttack();
         player->TakeDamage(damage);
-        output["result"] = "normal";
-        output["damage"] = damage;
-        output["playerHp"] = player->GetHp();
+        lastTurnResult["result"] = "normal";
+        lastTurnResult["damage"] = damage;
+        lastTurnResult["playerHp"] = player->GetHp();
     }
 
-    std::string jsonStr = output.dump();
+    lastTurnResult["enemyHp"] = enemy->GetHp();
+
+    std::string jsonStr = lastTurnResult.dump();
     outputFile << jsonStr << std::endl;
     currentTurn = Turn::PLAYER;
 }
@@ -115,10 +121,27 @@ void Battle::CheckEnd()
     if (player->IsDead() || enemy->IsDead())
     {
         running = false;
-        nlohmann::json output;
-        output["event"] = "battle_end";
-        output["winner"] = player->IsDead() ? "enemy" : "player";
-        std::string jsonStr = output.dump();
+        lastTurnResult.clear();
+        lastTurnResult["event"] = "battle_end";
+        lastTurnResult["winner"] = player->IsDead() ? "enemy" : "player";
+        lastTurnResult["playerHp"] = player->GetHp();
+        lastTurnResult["enemyHp"] = enemy->GetHp();
+        std::string jsonStr = lastTurnResult.dump();
         outputFile << jsonStr << std::endl;
     }
+}
+
+nlohmann::json Battle::GetLastTurnResult() const
+{
+    return lastTurnResult;
+}
+
+Character* Battle::GetPlayer() const
+{
+    return player;
+}
+
+Character* Battle::GetEnemy() const
+{
+    return enemy;
 }

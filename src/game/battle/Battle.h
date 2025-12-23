@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include "../json.hpp"
 
 const int TURN_DELAY_MS = 3000;
 
@@ -20,6 +21,7 @@ class Battle
         Character* enemy;
         Turn currentTurn;
         bool running;
+        nlohmann::json lastTurnResult;  // 마지막 턴 결과 저장
 
         void PlayerTurn( const AttackResult& action );
         void EnemyTurn();
@@ -31,5 +33,7 @@ class Battle
         void Start(Character& player, Character& enemy);
         void Update( const AttackResult& action );
         bool IsRunning() const;
-
+        nlohmann::json GetLastTurnResult() const;  // 마지막 턴 결과 반환
+        Character* GetPlayer() const;
+        Character* GetEnemy() const;
 };

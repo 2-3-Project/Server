@@ -1,18 +1,14 @@
-{"enemy":{"hp":50000,"name":"진하쌤, 윤지쌤"},"event":"battle_start","player":{"hp":100000,"name":"미림이"}}
-{"damage":15000,"enemyHp":35000,"event":"player_turn","result":"strong","spellId":"SPELL_001"}
-{"damage":10000,"event":"enemy_turn","playerHp":90000,"result":"normal"}
-{"damage":15000,"enemyHp":20000,"event":"player_turn","result":"strong","spellId":"SPELL_003"}
-{"damage":10000,"event":"enemy_turn","playerHp":80000,"result":"normal"}
-{"damage":15000,"enemyHp":5000,"event":"player_turn","result":"strong","spellId":"SPELL_005"}
-{"damage":10000,"event":"enemy_turn","playerHp":70000,"result":"normal"}
-{"damage":15000,"enemyHp":0,"event":"player_turn","result":"strong","spellId":"SPELL_007"}
-{"event":"battle_end","winner":"player"}
-{"event": "story", "message": "1번째 선생님을 물리쳤다! 스토리 진행..."} 
-{"enemy":{"hp":70000,"name":"성래쌤"},"event":"battle_start","player":{"hp":70000,"name":"미림이"}}
-{"damage":15000,"enemyHp":55000,"event":"player_turn","result":"strong","spellId":"SPELL_008"}
-{"damage":35000,"event":"enemy_turn","playerHp":35000,"result":"strong"}
-{"damage":15000,"enemyHp":40000,"event":"player_turn","result":"strong","spellId":"SPELL_010"}
-{"damage":25000,"event":"enemy_turn","playerHp":10000,"result":"normal"}
-{"event":"player_turn","result":"fail","spellId":""}
-{"damage":25000,"event":"enemy_turn","playerHp":0,"result":"normal"}
-{"event":"battle_end","winner":"enemy"}
+{"enemy":{"hp":50000,"maxHp":50000,"name":"진하쌤, 윤지쌤"},"event":"battle_start","player":{"hp":100000,"maxHp":100000,"name":"미림이"}}
+{"damage":15000,"enemyHp":35000,"event":"player_turn","playerHp":100000,"result":"strong","spellId":"SPELL_002"}
+{"damage":10000,"enemyHp":35000,"event":"enemy_turn","playerHp":90000,"result":"normal"}
+{"damage":15000,"enemyHp":20000,"event":"player_turn","playerHp":90000,"result":"strong","spellId":"SPELL_003"}
+{"damage":10000,"enemyHp":20000,"event":"enemy_turn","playerHp":80000,"result":"normal"}
+{"damage":15000,"enemyHp":5000,"event":"player_turn","playerHp":80000,"result":"strong","spellId":"SPELL_004"}
+{"damage":10000,"enemyHp":5000,"event":"enemy_turn","playerHp":70000,"result":"normal"}
+{"damage":15000,"enemyHp":0,"event":"player_turn","playerHp":70000,"result":"strong","spellId":"SPELL_005"}
+{"enemyHp":0,"event":"battle_end","playerHp":70000,"winner":"player"}
+{"enemy":{"hp":70000,"maxHp":70000,"name":"성래쌤"},"event":"battle_start","player":{"hp":70000,"maxHp":100000,"name":"미림이"}}
+{"damage":15000,"enemyHp":55000,"event":"player_turn","playerHp":70000,"result":"strong","spellId":"SPELL_007"}
+{"damage":35000,"enemyHp":55000,"event":"enemy_turn","playerHp":35000,"result":"strong"}
+{"damage":15000,"enemyHp":40000,"event":"player_turn","playerHp":35000,"result":"strong","spellId":"SPELL_008"}
+{"damage":25000,"enemyHp":40000,"event":"enemy_turn","playerHp":10000,"result":"normal"}

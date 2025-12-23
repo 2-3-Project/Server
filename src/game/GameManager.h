@@ -5,6 +5,7 @@
 #include "battle/Battle.h"
 #include "../game/core/Character.h"
 #include "../game/input/InputHandler.h"
+#include "../game/json.hpp"
 
 class GameManager
 {
@@ -19,6 +20,7 @@ class GameManager
 
     public :
         GameManager();
-
         void Run();
+
+        void ProcessTurn( const nlohmann::json& inputJson, nlohmann::json& outputJson );
 };

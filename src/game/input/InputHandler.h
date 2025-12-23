@@ -23,6 +23,7 @@ class InputHandler
 public:
     InputHandler(const std::string& filePath);
     AttackResult ResolveFromJson();
+    AttackResult ResolveFromJsonInput( const nlohmann::json& input );
 
 private:
     std::vector<nlohmann::json> inputs;
