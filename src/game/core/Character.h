@@ -21,6 +21,7 @@ class Character
 
         std::string GetName() const;
         int GetHp() const;
+        int GetMaxHp() const;
         int GetAttack() const;
         int GetStrongAttack() const;
 
