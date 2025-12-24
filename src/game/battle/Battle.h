@@ -36,4 +36,9 @@ class Battle
         nlohmann::json GetLastTurnResult() const;  // 마지막 턴 결과 반환
         Character* GetPlayer() const;
         Character* GetEnemy() const;
+        Turn GetCurrentTurn() const { return currentTurn; }
+        void SetRunning(bool r) { running = r; }
+        void SetCurrentTurn(Turn t) { currentTurn = t; }
+        void SetPlayer(Character* p) { player = p; }
+        void SetEnemy(Character* e) { enemy = e; }
 };
