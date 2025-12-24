@@ -61,3 +61,24 @@ AttackResult InputHandler::ResolveFromJson()
 
     return { AttackType::Fail, spellId };
 }
+
+AttackResult InputHandler::ResolveFromJsonInput(const nlohmann::json& input)
+{
+    std::string spellId = input.value("spellId", "");
+    float pronunciation = input.value("pronunciation", 0.0f);
+    int volume = input.value("volume", 0);
+
+    // 1차: 발음 정확도 체크
+    if (pronunciation < 70)
+        return { AttackType::Fail, spellId };
+
+    // 2차: 볼륨 체크
+    if (volume >= 85)
+        return { AttackType::Fail, spellId };  // 너무 크면 실패
+    else if (volume >= 70)
+        return { AttackType::Strong, spellId };  // 강한 공격
+    else if (volume >= 40)
+        return { AttackType::Normal, spellId };  // 일반 공격
+
+    return { AttackType::Fail, spellId };  // 볼륨이 너무 작으면 실패
+}
