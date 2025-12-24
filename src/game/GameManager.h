@@ -17,6 +17,8 @@ class GameManager
         int currentEnemyIndex;
 
         void SetupEnemies();
+        void SaveState();
+        void LoadState();
 
     public :
         GameManager();

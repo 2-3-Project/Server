@@ -1,144 +1,18 @@
-[
-    {
-        "enemy": {
-            "hp": 50000,
-            "maxHp": 50000,
-            "name": "진하쌤, 윤지쌤"
-        },
-        "event": "battle_start",
-        "player": {
-            "hp": 100000,
-            "maxHp": 100000,
-            "name": "미림이"
-        }
-    },
-    {
-        "enemyTurn": {
-            "damage": 10000,
-            "enemyHp": 35000,
-            "event": "enemy_turn",
-            "playerHp": 90000,
-            "result": "normal"
-        },
-        "event": "turn_complete",
-        "playerTurn": {
-            "damage": 15000,
-            "enemyHp": 35000,
-            "event": "player_turn",
-            "playerHp": 100000,
-            "result": "strong",
-            "spellId": "SPELL_002"
-        }
-    },
-    {
-        "enemyTurn": {
+{
+    "event": "battle_update",
+    "turns": [
+        {
             "damage": 10000,
             "enemyHp": 20000,
             "event": "enemy_turn",
-            "playerHp": 80000,
+            "playerHp": 40000,
             "result": "normal"
         },
-        "event": "turn_complete",
-        "playerTurn": {
-            "damage": 15000,
-            "enemyHp": 20000,
+        {
             "event": "player_turn",
-            "playerHp": 90000,
-            "result": "strong",
-            "spellId": "SPELL_003"
+            "playerHp": 40000,
+            "result": "fail",
+            "spellId": ""
         }
-    },
-    {
-        "enemyTurn": {
-            "damage": 10000,
-            "enemyHp": 5000,
-            "event": "enemy_turn",
-            "playerHp": 70000,
-            "result": "normal"
-        },
-        "event": "turn_complete",
-        "playerTurn": {
-            "damage": 15000,
-            "enemyHp": 5000,
-            "event": "player_turn",
-            "playerHp": 80000,
-            "result": "strong",
-            "spellId": "SPELL_004"
-        }
-    },
-    {
-        "enemyHp": 0,
-        "event": "enemy_defeated",
-        "message": "진하쌤, 윤지쌤 처치!",
-        "nextEnemy": "성래쌤",
-        "playerHp": 70000,
-        "winner": "player"
-    },
-    {
-        "enemy": {
-            "hp": 70000,
-            "maxHp": 70000,
-            "name": "성래쌤"
-        },
-        "event": "battle_start",
-        "player": {
-            "hp": 70000,
-            "maxHp": 100000,
-            "name": "미림이"
-        }
-    },
-    {
-        "enemyTurn": {
-            "damage": 35000,
-            "enemyHp": 55000,
-            "event": "enemy_turn",
-            "playerHp": 35000,
-            "result": "strong"
-        },
-        "event": "turn_complete",
-        "playerTurn": {
-            "damage": 15000,
-            "enemyHp": 55000,
-            "event": "player_turn",
-            "playerHp": 70000,
-            "result": "strong",
-            "spellId": "SPELL_007"
-        }
-    },
-    {
-        "enemyTurn": {
-            "damage": 25000,
-            "enemyHp": 40000,
-            "event": "enemy_turn",
-            "playerHp": 10000,
-            "result": "normal"
-        },
-        "event": "turn_complete",
-        "playerTurn": {
-            "damage": 15000,
-            "enemyHp": 40000,
-            "event": "player_turn",
-            "playerHp": 35000,
-            "result": "strong",
-            "spellId": "SPELL_008"
-        }
-    },
-    {
-        "enemyTurn": {
-            "enemyHp": 25000,
-            "event": "battle_end",
-            "playerHp": 0,
-            "winner": "enemy"
-        },
-        "event": "game_over",
-        "message": "패배했습니다...",
-        "playerTurn": {
-            "damage": 15000,
-            "enemyHp": 25000,
-            "event": "player_turn",
-            "playerHp": 10000,
-            "result": "strong",
-            "spellId": "SPELL_009"
-        }
-    }
-]
+    ]
+}

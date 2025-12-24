@@ -25,5 +25,7 @@ class Character
         int GetAttack() const;
         int GetStrongAttack() const;
 
+        void SetHp(int h) { hp = h; }
+
         void PrintStatus();
 };
