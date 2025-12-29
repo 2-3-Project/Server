@@ -41,6 +41,7 @@ void Battle::Update( const AttackResult& action )
 {
     if (!running) return;
 
+    std::cout << "Update currentTurn: " << static_cast<int>(currentTurn) << std::endl;
     if (currentTurn == Turn::PLAYER)
         PlayerTurn( action );
     else

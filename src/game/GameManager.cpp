@@ -104,6 +104,10 @@ void GameManager::ProcessTurn(const nlohmann::json& inputJson, nlohmann::json& o
     // 턴 결과를 저장할 배열
     nlohmann::json turns = nlohmann::json::array();
     
+    // 현재 턴을 플레이어로 설정 (입력에 따라 플레이어 턴 처리)
+    battle.SetCurrentTurn(Turn::PLAYER);
+    std::cout << "currentTurn after set: " << static_cast<int>(battle.GetCurrentTurn()) << std::endl;
+    
     // 플레이어 턴
     battle.Update(result);
     turns.push_back(battle.GetLastTurnResult());
