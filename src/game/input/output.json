@@ -2,17 +2,10 @@
     "event": "battle_update",
     "turns": [
         {
-            "damage": 10000,
-            "enemyHp": 20000,
-            "event": "enemy_turn",
-            "playerHp": 40000,
-            "result": "normal"
-        },
-        {
-            "event": "player_turn",
-            "playerHp": 40000,
-            "result": "fail",
-            "spellId": ""
+            "enemyHp": 0,
+            "event": "battle_end",
+            "playerHp": 70000,
+            "winner": "player"
         }
     ]
 }
