@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이크 입력 테스트</title>
+</head>
+<body>
+    <h1>마이크 입력으로 JSON 생성</h1>
+    <button id="startBtn">마이크 시작</button>
+    <button id="stopBtn" disabled>중지</button>
+    <p id="status">준비됨</p>
+    <p id="result"></p>
+    <pre id="jsonOutput"></pre>
+    <button id="testBtn">테스트 전송</button>
+    <p id="cppResult"></p>
+    <p id="debug"></p>
+
+    <script>
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+        const jsonOutput = document.getElementById('jsonOutput');
+
+        let recognition;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'ko-KR'; // 한국어 설정
+
+            recognition.onstart = () => {
+                status.textContent = '마이크 입력 중...';
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                result.textContent = '인식된 텍스트: ' + transcript;
+                
+                // JSON 생성
+                const jsonData = {
+                    spellId: transcript,
+                    pronunciation: 85.0,
+                    volume: 75
+                };
+                
+                jsonOutput.textContent = JSON.stringify(jsonData, null, 2);
+                
+                // 서버로 JSON 전송
+                fetch('http://localhost:3000/game/attack', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonData)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('cppResult').textContent = 'C++ 결과: ' + data;
+                    document.getElementById('debug').textContent = '디버그: ' + data;
+                })
+                .catch(error => {
+                    document.getElementById('cppResult').textContent = '오류: ' + error;
+                    document.getElementById('debug').textContent = '디버그 오류: ' + error;
+                });
+            };
+
+            recognition.onerror = (event) => {
+                status.textContent = '오류: ' + event.error;
+            };
+
+            recognition.onend = () => {
+                status.textContent = '완료';
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+            };
+
+            startBtn.addEventListener('click', () => {
+                recognition.start();
+            });
+
+            stopBtn.addEventListener('click', () => {
+                recognition.stop();
+            });
+
+            // 테스트 전송 버튼
+            document.getElementById('testBtn').addEventListener('click', () => {
+                const testJson = { spellId: "테스트", pronunciation: 85.0, volume: 75 };
+                jsonOutput.textContent = JSON.stringify(testJson, null, 2);
+                
+                fetch('http://localhost:3000/game/attack', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testJson)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('cppResult').textContent = 'C++ 결과: ' + data;
+                    document.getElementById('debug').textContent = '디버그: ' + data;
+                })
+                .catch(error => {
+                    document.getElementById('cppResult').textContent = '오류: ' + error;
+                    document.getElementById('debug').textContent = '디버그 오류: ' + error;
+                });
+            });
+        } else {
+            status.textContent = '이 브라우저는 음성 인식을 지원하지 않습니다.';
+            startBtn.disabled = true;
+        }
+    </script>
+</body>
+</html>
