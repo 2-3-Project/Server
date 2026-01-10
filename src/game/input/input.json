@@ -1,52 +1,5 @@
-[
-    {
-        "spellId": "SPELL_001",
-        "pronunciation": 80.0,
-        "volume": 75
-    },
-    {
-        "spellId": "SPELL_002",
-        "pronunciation": 85.0,
-        "volume": 80
-    },
-    {
-        "spellId": "SPELL_003",
-        "pronunciation": 90.0,
-        "volume": 70
-    },
-    {
-        "spellId": "SPELL_004",
-        "pronunciation": 80.0,
-        "volume": 70
-    },
-    {
-        "spellId": "SPELL_005",
-        "pronunciation": 85.0,
-        "volume": 75
-    },
-    {
-        "spellId": "SPELL_006",
-        "pronunciation": 90.0,
-        "volume": 80
-    },
-    {
-        "spellId": "SPELL_007",
-        "pronunciation": 80.0,
-        "volume": 70
-    },
-    {
-        "spellId": "SPELL_008",
-        "pronunciation": 85.0,
-        "volume": 70
-    },
-    {
-        "spellId": "SPELL_009",
-        "pronunciation": 90.0,
-        "volume": 75
-    },
-    {
-        "spellId": "SPELL_010",
-        "pronunciation": 80.0,
-        "volume": 80
-    }
-]
+{
+  "spellId": "테스트",
+  "pronunciation": 85,
+  "volume": 75
+}

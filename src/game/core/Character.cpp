@@ -32,6 +32,10 @@ int Character::GetHp() const
 {
     return this -> hp;
 }
+int Character::GetMaxHp() const
+{
+    return this -> maxHp;
+}
 int Character::GetAttack() const
 {
     return this -> attack;
